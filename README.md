@@ -1,8 +1,6 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-# Final-Project-2650
-
 ### What is semi-supervised learning?
 
 Semi-supervised learning uses a small portion of labeled data and a large amount of unlabeled data to train a model. This is in contrast to supervised learning, in which all data is labeled (regression, random forest, k nearest neighbors) and unsupervised learning (k-means clustering, hierarchical clustering), where all data are unlabeled. 
@@ -19,12 +17,12 @@ Approaches in image classification focus on the areas of consistency regularizat
 
 When network predictions are incorrect, these predictions are reinforced since the network predictions are used as labels for the unlabeled samples. Overfitting to these incorrect predictions is called confirmation bias. 
 
-To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (artificially generating new data from existing data) and label smoothing (a technique that introduces noise to the labels). The mixup method trains the model on sample pairs ($x_p$ and $x_q$) and corresponding output labels ($y_p$ and $y_q$)
+To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (artificially generating new data from existing data) and label smoothing (a technique that introduces noise to the labels). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($$y_p$$ and $$y_q$$)
 
-$x=\delta x_p + (1-\delta)x_q$,
-$y=\delta y_p + (1-\delta)y_q$
+$$x=\delta x_p + (1-\delta)x_q$$,
+$$y=\delta y_p + (1-\delta)y_q$$
 
-Where $\delta$ is randomly sampled from a beta distribution Be($\alpha,\beta$) with $\alpha=\beta$
+Where $$\delta$$ is randomly sampled from a beta distribution Be($$\alpha,\beta$$) with $$\alpha=\beta$$
 
 The combined version of y can be included in the loss function, producing an updated loss equation:
 
@@ -32,9 +30,9 @@ $$
 \ell^* = - \Sigma_{i=1}^N\delta[\tilde{y}_{i,p}^{T}log(h_{\theta}(x_i))] +  (1- \delta)[\tilde{y}_{i,q}^{T}log(h_{\theta}(x_i))]
 $$
 
-Combining $y_p$ and $y_q$ reduces prediction confidence, thus reducing overfitting to the predictions.
+Combining $$y_p$$ and $$y_q$$ reduces prediction confidence, thus reducing overfitting to the predictions.
 
-Including mixup in training generates softmax output $h_{\theta}(x)$ using the mixed input x, so a second forward pass using the original images is required to compute predictions that aren’t mixed. 
+Including mixup in training generates softmax output $$h_{\theta}(x)$$ using the mixed input x, so a second forward pass using the original images is required to compute predictions that aren’t mixed. 
 
 When there are few labeled samples, mixup may not be able to deal with confirmation bias effectively by itself. To improve the quality of the pseudo labels, the authors mention that previous studies have oversampled the labeled samples per each mini batch to reduce confirmation bias and reinforce correct labels. 
 
@@ -44,10 +42,10 @@ $$
 \ell^* = N_l\bar{\ell_l} + N_u\bar{\ell_u}
 $$
 
-where $N_l$ and $N_u$ are the number of labeled and unlabelled samples, and the 
+where $$N_l$$ and $$N_u$$ are the number of labeled and unlabelled samples, and the 
 $$
 \bar{\ell}_l = \frac{1}{N_l}\Sigma_{i=1}^{N_l}\ell_l^{(i)}
 $$
  is the average loss for the labeled samples, and $l_u$ is the average loss for the unlabeled samples. 
 
-When $N_l$ << $N_u$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $N_l$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
+When $$N_l$$ << $$N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
