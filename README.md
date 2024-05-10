@@ -39,7 +39,6 @@ This process works by using two types of hidden layers: convolution layers and p
 Pooling layers, the second type of layer used in CNNs, are essentially a form of dimension reduction that reduce a large image into a smaller summary image. One common method is max pooling, which looks at each section in an image and stores only the maximum value found in that section. These layers always come after a convolution layer, although there may be multiple convolution layers before a pooling layer, and therefore reduce the size of the feature maps created by each filter. The combination of convolution and pooling layers is repeated until the feature maps have low dimension, at which point they are flattened into individual units and fed to fully-connected layers before classification with the softmax output layer. An example of a CNN architecture is shown in Figure 3 (G. James et al., 2021). 
 
 | ![Figure 3](Figure 3.png) | 
-|:--:| 
 | *Figure 3* |
 
 As with standard feed-forward networks we saw in class, the CNN used in this paper has a feed-forward structure and uses backpropagation to calculate the gradients to optimize the $$\theta$$ parameters using mini-batch gradient descent. The CNN can also be tuned by adjusting the number, size, and type of the layers, as well as other features such as regularization and dropout terms, like we have previously seen. 
@@ -72,7 +71,6 @@ where the $$\lambda$$ values control the amount of regularization, which we have
 ## The Algorithm
 
 | *Figure 4* |
-|:--:| 
 | ![Figure 4](Figure 4.png) | 
 
 As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
