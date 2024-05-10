@@ -67,6 +67,8 @@ where the $\lambda$ values control the amount of regularization, which we have p
 
 ## The Algorithm
 
+### Add Figure 4 Here
+
 As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
 
 In order to optimize the network parameters, we first need to get initial soft pseudo-labels for the unlabeled data. To do so, the CNN is trained on the labeled data, $$D_l$$, for 10 epochs as a "warm-up". Then, the warm-up model is used to fit initial softmax predictions to the unlabeled data, $$D_u$$. The combined labeled and pseudo-labeled data are then used to further train the network. In each epoch, the parameters $$\theta$$ are updated using gradient descent on the loss function $$\ell$$ for each mini-batch, and the softmax predictions for each of the unlabeled observations are stored. 
@@ -77,7 +79,9 @@ $$\ell^*=-\sum^N_{i=1}\tilde{y_i}^T\log(h_{\theta}(x_i))$$
 
 As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)$$ are vectors, so multiplying the transpose of $$\tilde{y}_i$$ by the log of the softmax probability vector results in the dot product between the two. For labeled observations, $$\tilde{y}_i$$ is the true vector (eg $$\tilde{y}_i=(0,0,1)$$), so this just outputs the log of the predicted probability of being in the true class. For pseudo-labeled observations, $\tilde{y}_i$ is also a vector of softmax probabilities, which means the loss contribution is the dot product of the previous softmax predictions and the log of the new softmax predictions. The regularization terms $$R_H$$ and $$R_A$$ are also calculated (recall they are mini-batch averages), so that the gradient of $$\ell$$ can be calculated to obtain the stepping directions for $$\theta$$.
 
-The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}^{(t+1)}_i=h_{\theta^t}(x_i)$$, and these new labels are used in the next epoch (citation 24 Tanaka et al). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 2, and Figure 3 shows the general update procedure for the CNN parameters $\theta$ and the soft pseudo-labels $$\tilde{y}_i$$, as seen in Tanaka et al. 
+The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}^{(t+1)}_i=h_{\theta^t}(x_i)$$, and these new labels are used in the next epoch (citation 24 Tanaka et al). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 4, and Figure 5 shows the general update procedure for the CNN parameters $\theta$ and the soft pseudo-labels $$\tilde{y}_i$$. 
+
+### Add Figure 5 here
 
 
 
