@@ -1,6 +1,8 @@
 title: Classification Using Pseudo-Labeling in Semi-Supervised Learning
+subtitle: Rachel Yost, Maia Lindner-Liaw
 author:
 - Rachel Yost
 - Maia Lindner-Liaw
 show_downloads: false
+show_authors: true
 theme: jekyll-theme-minimal
