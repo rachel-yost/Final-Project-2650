@@ -1,3 +1,9 @@
-title: Rachel Yost
+title: Classification Using Pseudo-Labeling in Semi-Supervised Learning
+author:
+- name: Rachel Yost
+  affiliation: Brown University
+- name: Maia Lindner-Liaw
+  affiliation: Brown University
 show_downloads: true
 theme: jekyll-theme-minimal
+fig_caption: true
