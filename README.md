@@ -65,7 +65,7 @@ where the $$\lambda$$ values control the amount of regularization, which we have
 
 ## The Algorithm
 
-![Figure 4](Figure 4.ong){: width="400"}
+![Figure 4](Figure 4.png){: width="400"}
 
 As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
 
