@@ -40,7 +40,9 @@ This process works by using two types of hidden layers: convolution layers and p
 
 Pooling layers, the second type of layer used in CNNs, are essentially a form of dimension reduction that reduce a large image into a smaller summary image. One common method is max pooling, which looks at each section in an image and stores only the maximum value found in that section. These layers always come after a convolution layer, although there may be multiple convolution layers before a pooling layer, and therefore reduce the size of the feature maps created by each filter. The combination of convolution and pooling layers is repeated until the feature maps have low dimension, at which point they are flattened into individual units and fed to fully-connected layers before classification with the softmax output layer. An example of a CNN architecture is shown in Figure 3 from ISL page 416 (G. James et al., 2021). 
 
-| ![Figure 3](Figure 3.png) {: Figure 3 (ISL Figure 10.8)}| 
+| ![Figure 3](Figure 3.png) | 
+|:--:| 
+| **Figure 3** |
 
 As with standard feed-forward networks we saw in class, the CNN used in this paper has a feed-forward structure and uses backpropagation to calculate the gradients to optimize the $$\theta$$ parameters using mini-batch gradient descent. The CNN can also be tuned by adjusting the number, size, and type of the layers, as well as other features such as regularization and dropout terms, like we have previously seen. 
 
@@ -71,7 +73,9 @@ where the $$\lambda$$ values control the amount of regularization, which we have
 
 ## The Algorithm
 
-| ![Figure 4](Figure 4.png) {: *Figure 4*}| 
+| ![Figure 4](Figure 4.png) | 
+|:--:| 
+| **Figure 4** |
 
 As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
 
@@ -85,9 +89,9 @@ As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)
 
 The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}_i=h_{\theta}(x_i)$$, and these new labels are used in the next epoch (Tanaka et al, 2018). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 4, and Figure 5 shows the general update procedure for the CNN parameters $$\theta$$ and the soft pseudo-labels $$\tilde{y}_i$$. 
 
-| ![Figure 5](Figure 5.png) {: width="400"}| 
+| ![Figure 5](Figure 5.png) | 
 |:--:| 
-| *Figure 5*|
+| **Figure 5** |
 
 
 
