@@ -18,7 +18,7 @@ On this page, we will describe the pseudo-labeling methodology proposed in the p
 
 ### Set up and Notation
 
-For this implementation of pseudo-labeling, the authors specified data $$D$$ with $$N$$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $$y_i$$ values are one-hot encoded for $C$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $$y=(0,0,1)$$. 
+For this implementation of pseudo-labeling, the authors specified data $$D$$ with $$N$$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $$y_i$$ values are one-hot encoded for $$C$$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $$y=(0,0,1)$$. 
 
 | ![Figure 1](Figure 1.png){: width="400"} | 
 |:--:| 
@@ -83,9 +83,9 @@ Recall the basic loss function is the categorical cross-entropy loss
 
 $$\ell^*=-\sum^N_{i=1}\tilde{y_i}^T\log(h_{\theta}(x_i))$$
 
-As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)$$ are vectors, so multiplying the transpose of $$\tilde{y}_i$$ by the log of the softmax probability vector results in the dot product between the two. For labeled observations, $$\tilde{y}_i$$ is the true vector (eg $$\tilde{y}_i=(0,0,1)$$), so this just outputs the log of the predicted probability of being in the true class. For pseudo-labeled observations, $\tilde{y}_i$ is also a vector of softmax probabilities, which means the loss contribution is the dot product of the previous softmax predictions and the log of the new softmax predictions. The regularization terms $$R_H$$ and $$R_A$$ are also calculated (recall they are mini-batch averages), so that the gradient of $$\ell$$ can be calculated to obtain the stepping directions for $$\theta$$.
+As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)$$ are vectors, so multiplying the transpose of $$\tilde{y}_i$$ by the log of the softmax probability vector results in the dot product between the two. For labeled observations, $$\tilde{y}_i$$ is the true vector (eg $$\tilde{y}_i=(0,0,1)$$), so this just outputs the log of the predicted probability of being in the true class. For pseudo-labeled observations, $$\tilde{y}_i$$ is also a vector of softmax probabilities, which means the loss contribution is the dot product of the previous softmax predictions and the log of the new softmax predictions. The regularization terms $$R_H$$ and $$R_A$$ are also calculated (recall they are mini-batch averages), so that the gradient of $$\ell$$ can be calculated to obtain the stepping directions for $$\theta$$.
 
-The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}^{(t+1)}_i=h_{\theta^t}(x_i)$$, and these new labels are used in the next epoch (citation 24 Tanaka et al). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 4, and Figure 5 shows the general update procedure for the CNN parameters $\theta$ and the soft pseudo-labels $$\tilde{y}_i$$. 
+The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}_i=h_{\theta}(x_i)$$, and these new labels are used in the next epoch (Tanaka et al, 2018). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 4, and Figure 5 shows the general update procedure for the CNN parameters $$\theta$$ and the soft pseudo-labels $$\tilde{y}_i$$. 
 
 *Figure 5*
 ![Figure 5](Figure 5.png){: width="400"}
@@ -124,7 +124,7 @@ where $$N_l$$ and $$N_u$$ are the number of labeled and unlabelled samples, and 
 $$
 \bar{\ell}_l = \frac{1}{N_l}\Sigma_{i=1}^{N_l}\ell_l^{(i)}
 $$
- is the average loss for the labeled samples, and $l_u$ is the average loss for the unlabeled samples. 
+ is the average loss for the labeled samples, and $$l_u$$ is the average loss for the unlabeled samples. 
 
 When $$N_l$$ << $$N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
 
