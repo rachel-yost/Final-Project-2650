@@ -20,9 +20,9 @@ On this page, we will describe the pseudo-labeling methodology proposed in the p
 
 For this implementation of pseudo-labeling, the authors specified data $$D$$ with $$N$$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $$y_i$$ values are one-hot encoded for $$C$$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $$y=(0,0,1)$$. 
 
-| *Figure 1* |
+| ![Figure 1](Figure 1.png) | 
 |:--:| 
-| ![Figure 1](Figure 1.png){: width="400"} | 
+|**Figure 1** |
 
 This method uses soft pseudo-labeling which differs from hard pseudo-labeling in that it does not store the predicted classes, but rather the predicted softmax probabilities of each class. The pseudo-labels are denoted as $$\tilde{y}$$, and $$\tilde{y}=y$$ for the labeled observations. For example, if there are 3 classes, and the model predicts an observation is in class 1 with probability 0.2, class 2 with probability 0.2, and class 3 with probability 0.6, the soft pseudo-label is $$\tilde{y}=(0.2,0.2,0.6)$$.
 
@@ -32,9 +32,9 @@ The model used by the authors is a convolutional neural network (CNN) with a sof
 
 The difference between a CNN and a standard feed-forward neural network we have seen comes in the formulation of the layers and how it attempts to classify images. CNNs work by first identifying small, local features that are then combined together to form broader features, which are then used to calculate the class probabilities. This creates a hierarchical structure in the network, which is illustrated in Figure 2, taken from ISL page 412 (G. James et al., 2021). In this figure, we can see that the network identifies areas of lines, shapes, and colors, which are then combined to identify larger features such as eyes and ears. 
 
-| *Figure 2 (ISL Figure 10.6)* |
-|:--:| 
-| ![Figure 2](Figure 2.png){: width="400"} | 
+| ![Figure 2](Figure 2.png) | 
+|:--:|
+|**Figure 2 (ISL Figure 10.6)** |
 
 This process works by using two types of hidden layers: convolution layers and pooling layers. Convolution layers contain a series of convolution filters, which determine whether a small feature is present in the image by going through the entire image in sections the same size as the filter. This is achieved by matrix multiplying the the data in each section by the filter values to create a new matrix of values called the convolved image. If the convolved image has large values, this means that the image section contains features similar to the feature the filter is trying to identify. The convolved images are combined to create a feature map for each filter, which is then passed on to the next layer. The values in each filter, which represent the feature it is identifying,  are comparable to the weight matrices we have seen in feed-forward networks and are the parameters $$\theta$$ being optimized when training the CNN. The number of filters in a layer is analogous to the width of a layer in the networks we have previously seen (G. James et al., 2021).
 
