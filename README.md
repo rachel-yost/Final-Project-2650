@@ -18,7 +18,7 @@ On this page, we will describe the pseudo-labeling methodology proposed in the p
 
 ### Set up and Notation
 
-For this implementation of pseudo-labeling, the authors specified data $D$ with $N$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $$y_i$$ values are one-hot encoded for $C$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $$y=(0,0,1)$$. 
+For this implementation of pseudo-labeling, the authors specified data $$D$$ with $$N$$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $$y_i$$ values are one-hot encoded for $C$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $$y=(0,0,1)$$. 
 
 | ![Figure 1](Figure 1.png){: width="400"} | 
 |:--:| 
@@ -32,7 +32,7 @@ The model used by the authors is a convolutional neural network (CNN) with a sof
 
 The difference between a CNN and a standard feed-forward neural network we have seen comes in the formulation of the layers and how it attempts to classify images. CNNs work by first identifying small, local features that are then combined together to form broader features, which are then used to calculate the class probabilities. This creates a hierarchical structure in the network, which is illustrated in Figure 2, taken from ISL page 412 (G. James et al., 2021). In this figure, we can see that the network identifies areas of lines, shapes, and colors, which are then combined to identify larger features such as eyes and ears. 
 
-| *Figure 2* |
+| *Figure 2 (ISL Figure 10.6)* |
 |:--:| 
 | ![Figure 2](Figure 2.png){: width="400"} | 
 
@@ -41,7 +41,7 @@ This process works by using two types of hidden layers: convolution layers and p
 Pooling layers, the second type of layer used in CNNs, are essentially a form of dimension reduction that reduce a large image into a smaller summary image. One common method is max pooling, which looks at each section in an image and stores only the maximum value found in that section. These layers always come after a convolution layer, although there may be multiple convolution layers before a pooling layer, and therefore reduce the size of the feature maps created by each filter. The combination of convolution and pooling layers is repeated until the feature maps have low dimension, at which point they are flattened into individual units and fed to fully-connected layers before classification with the softmax output layer. An example of a CNN architecture is shown in Figure 3 from ISL page 416 (G. James et al., 2021). 
 
 | ![Figure 3](Figure 3.png) | 
-| *Figure 3* |
+| *Figure 3 (ISL Figure 10.8)* |
 
 As with standard feed-forward networks we saw in class, the CNN used in this paper has a feed-forward structure and uses backpropagation to calculate the gradients to optimize the $$\theta$$ parameters using mini-batch gradient descent. The CNN can also be tuned by adjusting the number, size, and type of the layers, as well as other features such as regularization and dropout terms, like we have previously seen. 
 
