@@ -17,7 +17,7 @@ Approaches in image classification focus on the areas of consistency regularizat
 
 ### Set up and Notation
 
-For this implementation of pseudo-labeling, the authors specified data $D$ with $N$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $y_i$ values are one-hot encoded for $C$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $y=(0,0,1)$. 
+For this implementation of pseudo-labeling, the authors specified data $D$ with $N$ observations split into labeled and unlabeled sets $D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$ and $D_u=\{x_i\}^{N_u}_{i=1}$, respectively (Figure 1). Here, the $y_i$ values are one-hot encoded for $C$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $y=(0,0,1)$. 
 
 This method uses soft pseudo-labeling which differs from hard pseudo-labeling in that it does not store the predicted classes, but rather the predicted softmax probabilities of each class. The pseudo-labels are denoted as $\tilde{y}$, and $\tilde{y}=y$ for the labeled observations. For example, if there are 3 classes, and the model predicts an observation is in class 1 with probability 0.2, class 2 with probability 0.2, and class 3 with probability 0.6, the soft pseudo-label is $\tilde{y}=(0.2,0.2,0.6)$.
 
