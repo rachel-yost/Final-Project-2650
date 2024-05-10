@@ -1,7 +1,15 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-## Classification Using Pseudo-Labeling in Semi-Supervised Learning
+title: Classification Using Pseudo-Labeling in Semi-Supervised Learning
+author:
+- name: Rachel Yost
+  affiliation: Brown University
+- name: Maia Lindner-Liaw
+  affiliation: Brown University
+show_downloads: true
+theme: jekyll-theme-minimal
+fig_caption: true
 
 ### What is semi-supervised learning?
 
