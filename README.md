@@ -16,7 +16,7 @@ Approaches in image classification focus on the areas of consistency regularizat
 
 ### Set up and Notation
 
-![Figure 1](Figure 1.jpg){: width="400"}
+![Figure 1](Figure 1.png){: width="400"}
 
 For this implementation of pseudo-labeling, the authors specified data $D$ with $N$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $$y_i$$ values are one-hot encoded for $C$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $$y=(0,0,1)$$. 
 
@@ -65,7 +65,7 @@ where the $$\lambda$$ values control the amount of regularization, which we have
 
 ## The Algorithm
 
-![Figure 4](Figure 4.jpg){: width="400"}
+![Figure 4](Figure 4.ong){: width="400"}
 
 As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
 
@@ -79,7 +79,7 @@ As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)
 
 The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}^{(t+1)}_i=h_{\theta^t}(x_i)$$, and these new labels are used in the next epoch (citation 24 Tanaka et al). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 4, and Figure 5 shows the general update procedure for the CNN parameters $\theta$ and the soft pseudo-labels $$\tilde{y}_i$$. 
 
-![Figure 5](Figure 5.jpg){: width="400"}
+![Figure 5](Figure 5.png){: width="400"}
 
 
 
@@ -118,3 +118,21 @@ $$
  is the average loss for the labeled samples, and $l_u$ is the average loss for the unlabeled samples. 
 
 When $$N_l$$ << $$N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
+
+
+
+
+
+### References
+
+1.	Arazo, E., Ortego, D., Albert, P., O’Connor, N. E. & McGuinness, K. Pseudo-Labeling and Confirmation Bias in Deep Semi-Supervised Learning. in 2020 International Joint Conference on Neural Networks (IJCNN) 1–8 (2020). doi:10.1109/IJCNN48605.2020.9207304.
+2.	Lee, D.-H. Pseudo-Label : The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks. ICML 2013 Workshop Chall. Represent. Learn. WREPL (2013).
+3.	Shi, W. et al. Transductive Semi-Supervised Deep Learning Using Min-Max Features. in Computer Vision – ECCV 2018 (eds. Ferrari, V., Hebert, M., Sminchisescu, C. & Weiss, Y.) vol. 11209 311–327 (Springer International Publishing, Cham, 2018).
+4.	Iscen, A., Tolias, G., Avrithis, Y. & Chum, O. Label Propagation for Deep Semi-Supervised Learning. in 5070–5079 (2019).
+5.	Vedral, V. The role of relative entropy in quantum information theory. Rev. Mod. Phys. 74, 197–234 (2002).
+6.	Tanaka, D., Ikami, D., Yamasaki, T. & Aizawa, K. Joint Optimization Framework for Learning with Noisy Labels. Preprint at http://arxiv.org/abs/1803.11364 (2018).
+7.	Krizhevsky, A. Learning Multiple Layers of Features from Tiny Images.
+8.	Netzer, Y. et al. Reading Digits in Natural Images with Unsupervised Feature Learning.
+9.	Vinyals, O., Blundell, C., Lillicrap, T., Kavukcuoglu, K. & Wierstra, D. Matching Networks for One Shot Learning. Preprint at http://arxiv.org/abs/1606.04080 (2017).
+10. James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). An Introduction to Statistical Learning with Applications in R (2nd ed.). Springer.
+
