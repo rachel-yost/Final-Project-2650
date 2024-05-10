@@ -17,9 +17,62 @@ Approaches in image classification focus on the areas of consistency regularizat
 
 ### Set up and Notation
 
+### Add figure here
+![Figure 1]
+
 For this implementation of pseudo-labeling, the authors specified data $D$ with $N$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $$y_i$$ values are one-hot encoded for $C$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $$y=(0,0,1)$$. 
 
-This method uses soft pseudo-labeling which differs from hard pseudo-labeling in that it does not store the predicted classes, but rather the predicted softmax probabilities of each class. The pseudo-labels are denoted as $\tilde{y}$, and $$\tilde{y}=y$$ for the labeled observations. For example, if there are 3 classes, and the model predicts an observation is in class 1 with probability 0.2, class 2 with probability 0.2, and class 3 with probability 0.6, the soft pseudo-label is $$\tilde{y}=(0.2,0.2,0.6)$$.
+This method uses soft pseudo-labeling which differs from hard pseudo-labeling in that it does not store the predicted classes, but rather the predicted softmax probabilities of each class. The pseudo-labels are denoted as $$\tilde{y}$$, and $$\tilde{y}=y$$ for the labeled observations. For example, if there are 3 classes, and the model predicts an observation is in class 1 with probability 0.2, class 2 with probability 0.2, and class 3 with probability 0.6, the soft pseudo-label is $$\tilde{y}=(0.2,0.2,0.6)$$.
+
+### Convolutional Neural Networks
+
+#### Add figure 2 here
+
+The model used by the authors is a convolution neural network (CNN) with a softmax outcome function, specified as $$h_{\theta}(x)$$, where $$\theta$$ represents the parameters of the network. 
+
+The difference between a CNN and a standard feed-forward neural network we have seen comes in the formulation of the layers and how it attempts to classify images. CNNs work by first identifying small, local features that are then combined together to form broader features, which are then used to calculate the class probabilities. This creates a hierarchical structure in the network, which is illustrated in Figure 4, taken from ISL page 412 (G. James et al., 2021). In this figure, we can see that the network identifies areas of lines, shapes, and colors, which are then combined to identify larger features such as eyes and ears. 
+
+This process works by using two types of hidden layers: convolution layers and pooling layers. Convolution layers contain a series of convolution filters, which determine whether a small feature is present in the image by going through the entire image in sections the same size as the filter. This is achieved by matrix multiplying the the data in each section by the filter values to create a new matrix of values called the convolved image. If the convolved image has large values, this means that the image section contains features similar to the feature the filter is trying to identify. The convolved images are combined to create a feature map for each filter, which is then passed on to the next layer. The values in each filter, which represent the feature it is identifying,  are comparable to the weight matrices we have seen in feed-forward networks and are the parameters $$\theta$$ being optimized when training the CNN. The number of filters in a layer is analogous to the width of a layer in the networks we have previously seen (G. James et al., 2021).
+
+Pooling layers, the second type of layer used in CNNs, are essentially a form of dimension reduction that reduce a large image into a smaller summary image. One common method is max pooling, which looks at each section in an image and stores only the maximum value found in that section. These layers always come after a convolution layer, although there may be multiple convolution layers before a pooling layer, and therefore reduce the size of the feature maps created by each filter. The combination of convolution and pooling layers is repeated until the feature maps have low dimension, at which point they are flattened into individual units and fed to fully-connected layers before classification with the softmax output layer. An example of a CNN architecture is shown in Figure 3 (G. James et al., 2021). 
+
+### Add figure 3 here
+
+As with standard feed-forward networks we saw in class, the CNN used in this paper has a feed-forward structure and uses backpropagation to calculate the gradients to optimize the $$\theta$$ parameters using mini-batch gradient descent. The CNN can also be tuned by adjusting the number, size, and type of the layers, as well as other features such as regularization and dropout terms, like we have previously seen. 
+
+### Loss Function and Regularization
+In order to train the CNN, the categorical cross-entropy loss function is used to optimize the parameters $$\theta$$. It has the form 
+
+$$\ell^*=-\sum^N_{i=1}\tilde{y_i}^T\log(h_{\theta}(x_i))$$,
+where $$h_{\theta}(x)$$ are the predicted probabilities for each class, and an element-wise logarithm is used.
+
+Additionally, 2 regularization terms are included in the loss function to address 2 different issues. In previous assignments, we have seen the tendency for predictions to all fall into the larger class, particularly with unbalanced data, which minimizes the amount of error. The first regularization aims prevent predictions from all being of the same class to minimize this issue, and it has the form 
+$$R_A=\sum^C_{c=1}p_c\log\left(\frac{p_c}{\bar{h}_c}\right)$$
+
+Here, $$p_c$$ represents the prior distribution of the probability of being in class $$c$$, which is assumed to be uniform with $$p_c=1/C$$. $$\bar{h}_c$$ is the softmax probability for class $$c$$ averaged across all observations, which is estimated by averaging the probabilities obtained within each mini-batch. If there is perfect agreement between the prior probability and the predicted probability for class $$c$$ ie an even probability distribution between classes, then $$\log(p_c/\bar{h}_c)=\log(1)=0$$, and this regularization term has no effect. If the average predicted probability for class $$c$$ is either very large or very small, ie the predicted probability of being in one class is much larger than the others, the $$\log(p_c/\bar{h}_c)$$ term becomes large, which then penalizes the loss function. 
+
+The second regularization is needed when using soft pseudo-labels instead of hard labels. Without this regularization, the algorithm can get caught in local minima which prevents convergence to the global minima. This regularization avoids these local minima by concentrating the probability distribution of each label to one class, using the entropy averaged over all observations
+$$R_H=-\frac{1}{N}\sum^N_{i=1}\sum^C_{c=1}h^c_{\theta}(x_i)\log(h^c_{\theta}(x_i))$$
+
+where $$h_{\theta}^c(x_i)$$ is the $$c$$th softmax probability of from $$h_{\theta}(x_i)$$. Entropy represents the amount of uncertainty in predicting the class of the outcome and is given by $$-\sum^C_{c=1}h^c_{\theta}(x_i)\log(h^c_{\theta}(x_i))$$ portion of the regularization (Vedral, 2002). When the predicted probabilities are very similar, indicating high uncertainty in prediction, the entropy will be high, and when there is less uncertainty, the entropy will be lower. For example, predicted probabilities $$h_{\theta}(x_i)=(.3,.3,.4)$$ have entropy equal to 1.09, whereas the predicted probabilities $$h_{\theta}(x_i)=(.9,.05,.05)$$ have entropy 0.394. Therefore, this regularization term will apply a larger penalty to the loss function when entropy is high, which encourages the probability of one class to be larger than the others. Like with the first regularization term, the average entropy of all observations is estimated by averaging over the observations in each mini-batch. 
+
+It may seem like these regularizations are contradictory, but their weights are adjustable so they're effects don't just cancel out. When we combine the cross-entropy loss with the regularizations, we get the penalized loss function 
+$$\ell=\ell^*+\lambda_AR_A+\lambda_HR_H$$
+where the $\lambda$ values control the amount of regularization, which we have previously seen with L1 and L2 regularization. 
+
+## The Algorithm
+
+As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
+
+In order to optimize the network parameters, we first need to get initial soft pseudo-labels for the unlabeled data. To do so, the CNN is trained on the labeled data, $$D_l$$, for 10 epochs as a "warm-up". Then, the warm-up model is used to fit initial softmax predictions to the unlabeled data, $$D_u$$. The combined labeled and pseudo-labeled data are then used to further train the network. In each epoch, the parameters $$\theta$$ are updated using gradient descent on the loss function $$\ell$$ for each mini-batch, and the softmax predictions for each of the unlabeled observations are stored. 
+
+Recall the basic loss function is the categorical cross-entropy loss
+$$\ell^*=-\sum^N_{i=1}\tilde{y_i}^T\log(h_{\theta}(x_i))$$
+As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)$$ are vectors, so multiplying the transpose of $$\tilde{y}_i$$ by the log of the softmax probability vector results in the dot product between the two. For labeled observations, $$\tilde{y}_i$$ is the true vector (eg $$\tilde{y}_i=(0,0,1)$$), so this just outputs the log of the predicted probability of being in the true class. For pseudo-labeled observations, $\tilde{y}_i$ is also a vector of softmax probabilities, which means the loss contribution is the dot product of the previous softmax predictions and the log of the new softmax predictions. The regularization terms $$R_H$$ and $$R_A$$ are also calculated (recall they are mini-batch averages), so that the gradient of $$\ell$$ can be calculated to obtain the stepping directions for $$\theta$$.
+
+The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}^{(t+1)}_i=h_{\theta^t}(x_i)$$, and these new labels are used in the next epoch (citation 24 Tanaka et al). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 2, and Figure 3 shows the general update procedure for the CNN parameters $\theta$ and the soft pseudo-labels $$\tilde{y}_i$$, as seen in Tanaka et al. 
+
+
 
 ### Confirmation bias
 
