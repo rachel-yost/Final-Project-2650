@@ -43,7 +43,7 @@ As with standard feed-forward networks we saw in class, the CNN used in this pap
 ### Loss Function and Regularization
 In order to train the CNN, the categorical cross-entropy loss function is used to optimize the parameters $$\theta$$. It has the form 
 
-$$\ell^*=-\sum^N_{i=1}\tilde{y_i}^T\log(h_{\theta}(x_i))$$,
+$$\ell^*=-\sum^N_{i=1}\tilde{y_i}^T\log(h_{\theta}(x_i))$$
 
 where $$h_{\theta}(x)$$ are the predicted probabilities for each class, and an element-wise logarithm is used.
 
@@ -63,7 +63,7 @@ It may seem like these regularizations are contradictory, but their weights are 
 
 $$\ell=\ell^*+\lambda_AR_A+\lambda_HR_H$$
 
-where the $\lambda$ values control the amount of regularization, which we have previously seen with L1 and L2 regularization. 
+where the $$\lambda$$ values control the amount of regularization, which we have previously seen with L1 and L2 regularization. 
 
 ## The Algorithm
 
