@@ -26,7 +26,7 @@ This method uses soft pseudo-labeling which differs from hard pseudo-labeling in
 
 ![Figure 2](Figure 2.png){: width="400"}
 
-The model used by the authors is a convolution neural network (CNN) with a softmax outcome function, specified as $$h_{\theta}(x)$$, where $$\theta$$ represents the parameters of the network. 
+The model used by the authors is a convolutional neural network (CNN) with a softmax outcome function, specified as $$h_{\theta}(x)$$, where $$\theta$$ represents the parameters of the network. 
 
 The difference between a CNN and a standard feed-forward neural network we have seen comes in the formulation of the layers and how it attempts to classify images. CNNs work by first identifying small, local features that are then combined together to form broader features, which are then used to calculate the class probabilities. This creates a hierarchical structure in the network, which is illustrated in Figure 4, taken from ISL page 412 (G. James et al., 2021). In this figure, we can see that the network identifies areas of lines, shapes, and colors, which are then combined to identify larger features such as eyes and ears. 
 
