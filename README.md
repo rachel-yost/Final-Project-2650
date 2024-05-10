@@ -1,16 +1,6 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
----
-title: Classification Using Pseudo-Labeling in Semi-Supervised Learning
-author:
-- name: Rachel Yost
-  affiliation: Brown University
-- name: Maia Lindner-Liaw
-  affiliation: Brown University
-show_downloads: true
-theme: jekyll-theme-minimal
-fig_caption: true
----
+
 ### What is semi-supervised learning?
 
 Semi-supervised learning uses a small portion of labeled data and a large amount of unlabeled data to train a model. This is in contrast to supervised learning, in which all data is labeled (regression, random forest, k nearest neighbors) and unsupervised learning (k-means clustering, hierarchical clustering), where all data are unlabeled. 
@@ -25,6 +15,7 @@ Approaches in image classification focus on the areas of consistency regularizat
 ### Set up and Notation
 
 ![Figure 1](Figure 1.png){: width="400"}
+* Figure 1 *
 
 For this implementation of pseudo-labeling, the authors specified data $D$ with $N$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $$y_i$$ values are one-hot encoded for $C$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $$y=(0,0,1)$$. 
 
@@ -33,6 +24,7 @@ This method uses soft pseudo-labeling which differs from hard pseudo-labeling in
 ### Convolutional Neural Networks
 
 ![Figure 2](Figure 2.png){: width="400"}
+* Figure 2 *
 
 The model used by the authors is a convolutional neural network (CNN) with a softmax outcome function, specified as $$h_{\theta}(x)$$, where $$\theta$$ represents the parameters of the network. 
 
@@ -43,6 +35,7 @@ This process works by using two types of hidden layers: convolution layers and p
 Pooling layers, the second type of layer used in CNNs, are essentially a form of dimension reduction that reduce a large image into a smaller summary image. One common method is max pooling, which looks at each section in an image and stores only the maximum value found in that section. These layers always come after a convolution layer, although there may be multiple convolution layers before a pooling layer, and therefore reduce the size of the feature maps created by each filter. The combination of convolution and pooling layers is repeated until the feature maps have low dimension, at which point they are flattened into individual units and fed to fully-connected layers before classification with the softmax output layer. An example of a CNN architecture is shown in Figure 3 (G. James et al., 2021). 
 
 ![Figure 3](Figure 3.png){: width="400"}
+* Figure 3 *
 
 As with standard feed-forward networks we saw in class, the CNN used in this paper has a feed-forward structure and uses backpropagation to calculate the gradients to optimize the $$\theta$$ parameters using mini-batch gradient descent. The CNN can also be tuned by adjusting the number, size, and type of the layers, as well as other features such as regularization and dropout terms, like we have previously seen. 
 
@@ -74,6 +67,7 @@ where the $$\lambda$$ values control the amount of regularization, which we have
 ## The Algorithm
 
 ![Figure 4](Figure 4.png){: width="400"}
+* Figure 4 *
 
 As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
 
@@ -87,6 +81,7 @@ As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)
 
 The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}^{(t+1)}_i=h_{\theta^t}(x_i)$$, and these new labels are used in the next epoch (citation 24 Tanaka et al). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 4, and Figure 5 shows the general update procedure for the CNN parameters $\theta$ and the soft pseudo-labels $$\tilde{y}_i$$. 
 
+* Figure 5 *
 ![Figure 5](Figure 5.png){: width="400"}
 
 
