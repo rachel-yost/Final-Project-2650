@@ -91,8 +91,7 @@ When network predictions are incorrect, these predictions are reinforced since t
 
 To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (artificially generating new data from existing data) and label smoothing (a technique that introduces noise to the labels). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($$y_p$$ and $$y_q$$)
 
-$$x=\delta x_p + (1-\delta)x_q$$,
-$$y=\delta y_p + (1-\delta)y_q$$
+$$x=\delta x_p + (1-\delta)x_q, \qquad y=\delta y_p + (1-\delta)y_q$$
 
 Where $$\delta$$ is randomly sampled from a beta distribution Be($$\alpha,\beta$$) with $$\alpha=\beta$$
 
