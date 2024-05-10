@@ -71,7 +71,7 @@ where the $$\lambda$$ values control the amount of regularization, which we have
 
 ## The Algorithm
 
-| ![Figure 4](Figure 4.png) {: Figure 4}| 
+| ![Figure 4](Figure 4.png) {: *Figure 4*}| 
 
 As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
 
@@ -85,8 +85,9 @@ As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)
 
 The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}_i=h_{\theta}(x_i)$$, and these new labels are used in the next epoch (Tanaka et al, 2018). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 4, and Figure 5 shows the general update procedure for the CNN parameters $$\theta$$ and the soft pseudo-labels $$\tilde{y}_i$$. 
 
-| ![Figure 5](Figure 5.png) {Figure 5}| 
+| ![Figure 5](Figure 5.png) {: width="400"}| 
 |:--:| 
+| *Figure 5*|
 
 
 
