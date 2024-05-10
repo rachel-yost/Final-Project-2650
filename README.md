@@ -1,6 +1,6 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+---
 title: Classification Using Pseudo-Labeling in Semi-Supervised Learning
 author:
 - name: Rachel Yost
@@ -10,7 +10,7 @@ author:
 show_downloads: true
 theme: jekyll-theme-minimal
 fig_caption: true
-
+---
 ### What is semi-supervised learning?
 
 Semi-supervised learning uses a small portion of labeled data and a large amount of unlabeled data to train a model. This is in contrast to supervised learning, in which all data is labeled (regression, random forest, k nearest neighbors) and unsupervised learning (k-means clustering, hierarchical clustering), where all data are unlabeled. 
