@@ -70,7 +70,7 @@ $$\ell=\ell^*+\lambda_AR_A+\lambda_HR_H$$
 
 where the $$\lambda$$ values control the amount of regularization, which we have previously seen with L1 and L2 regularization. 
 
-## The Algorithm
+### The Algorithm
 
 As previously stated, the model used in this paper is a convolution neural network (CNN) that trains similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
 
