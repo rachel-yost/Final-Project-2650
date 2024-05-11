@@ -52,17 +52,17 @@ $$\ell^*=-\sum^N_{i=1}\tilde{y_i}^T\log(h_{\theta}(x_i))$$
 
 where $$h_{\theta}(x)$$ are the predicted probabilities for each class, and an element-wise logarithm is used.
 
-Additionally, 2 regularization terms are included in the loss function to address 2 different issues. In previous assignments, we have seen the tendency for predictions to all fall into the larger class, particularly with unbalanced data, which minimizes the amount of error. The first regularization aims prevent predictions from all being of the same class to minimize this issue, and it has the form 
+Additionally, 2 regularization terms are included in the loss function to address 2 different issues. In previous assignments, we have seen the tendency for predictions to all fall into the larger class, particularly with unbalanced data, which minimizes the amount of error. The first regularization aims to prevent predictions from all being in the same class, and it has the form 
 
 $$R_A=\sum^C_{c=1}p_c\log\left(\frac{p_c}{\bar{h}_c}\right)$$
 
-Here, $$p_c$$ represents the prior distribution of the probability of being in class $$c$$, which is assumed to be uniform with $$p_c=1/C$$. $$\bar{h}_c$$ is the softmax probability for class $$c$$ averaged across all observations, which is estimated by averaging the probabilities obtained within each mini-batch. If there is perfect agreement between the prior probability and the predicted probability for class $$c$$ ie an even probability distribution between classes, then $$\log(p_c/\bar{h}_c)=\log(1)=0$$, and this regularization term has no effect. If the average predicted probability for class $$c$$ is either very large or very small, ie the predicted probability of being in one class is much larger than the others, the $$\log(p_c/\bar{h}_c)$$ term becomes large, which then penalizes the loss function. 
+Here, $$p_c$$ represents the prior distribution of the probability of being in class $$c$$, which is assumed to be uniform with $$p_c=1/C$$. $$\bar{h}_c$$ is the softmax probability for class $$c$$ averaged across all observations, which is estimated by averaging the probabilities obtained within each mini-batch. If there is perfect agreement between the prior probability and the predicted probability for class $$c$$ i.e. a uniform probability distribution between classes, then $$\log(p_c/\bar{h}_c)=\log(1)=0$$, and this regularization term has no effect. If the average predicted probability for class $$c$$ is either very large or very small, i.e. the predicted probability of being in one class is much larger than the others, the $$\log(p_c/\bar{h}_c)$$ term becomes large, which then penalizes the loss function. 
 
 The second regularization is needed when using soft pseudo-labels instead of hard labels. Without this regularization, the algorithm can get caught in local minima which prevents convergence to the global minima. This regularization avoids these local minima by concentrating the probability distribution of each label to one class, using the entropy averaged over all observations
 
 $$R_H=-\frac{1}{N}\sum^N_{i=1}\sum^C_{c=1}h^c_{\theta}(x_i)\log(h^c_{\theta}(x_i))$$
 
-where $$h_{\theta}^c(x_i)$$ is the $$c$$th softmax probability of from $$h_{\theta}(x_i)$$. Entropy represents the amount of uncertainty in predicting the class of the outcome and is given by $$-\sum^C_{c=1}h^c_{\theta}(x_i)\log(h^c_{\theta}(x_i))$$ portion of the regularization (6). When the predicted probabilities are very similar, indicating high uncertainty in prediction, the entropy will be high, and when there is less uncertainty, the entropy will be lower. For example, predicted probabilities $$h_{\theta}(x_i)=(.3,.3,.4)$$ have entropy equal to 1.09, whereas the predicted probabilities $$h_{\theta}(x_i)=(.9,.05,.05)$$ have entropy 0.394. Therefore, this regularization term will apply a larger penalty to the loss function when entropy is high, which encourages the probability of one class to be larger than the others. Like with the first regularization term, the average entropy of all observations is estimated by averaging over the observations in each mini-batch. 
+where $$h_{\theta}^c(x_i)$$ is the $$c$$th softmax probability from $$h_{\theta}(x_i)$$. Entropy, representing the amount of uncertainty in predicting the class of the outcome, is given by $$-\sum^C_{c=1}h^c_{\theta}(x_i)\log(h^c_{\theta}(x_i))$$ portion of the regularization (6). When the predicted probabilities are very similar, indicating high uncertainty in prediction, the entropy will be high, and when there is less uncertainty, the entropy will be lower. For example, predicted probabilities $$h_{\theta}(x_i)=(.3,.3,.4)$$ have entropy equal to 1.09, whereas the predicted probabilities $$h_{\theta}(x_i)=(.9,.05,.05)$$ have entropy 0.394. Therefore, this regularization term will apply a larger penalty to the loss function when entropy is high, which encourages the probability of one class to be larger than the others. Like with the first regularization term, the average entropy of all observations is estimated by averaging over the observations in each mini-batch. 
 
 It may seem like these regularizations are contradictory, but their weights are adjustable so they're effects don't just cancel out. When we combine the cross-entropy loss with the regularizations, we get the penalized loss function 
 
@@ -84,7 +84,7 @@ In each epoch, the parameters $$\theta$$ are updated using gradient descent on t
 
 $$\ell^*=-\sum^N_{i=1}\tilde{y_i}^T\log(h_{\theta}(x_i))$$
 
-As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)$$ are vectors, so multiplying the transpose of $$\tilde{y}_i$$ by the log of the softmax probability vector results in the dot product between the two. For labeled observations, $$\tilde{y}_i$$ is the true vector (eg $$\tilde{y}_i=(0,0,1)$$), so this just outputs the log of the predicted probability of being in the true class. For pseudo-labeled observations, $$\tilde{y}_i$$ is also a vector of softmax probabilities, which means the loss contribution is the dot product of the previous softmax predictions and the log of the new softmax predictions. The regularization terms $$R_H$$ and $$R_A$$ are also calculated (recall they are mini-batch averages), so that the gradient of $$\ell$$ can be calculated to obtain the stepping directions for $$\theta$$.
+As mentioned in the notation section, both $$\tilde{y}_i$$ and $$h_{\theta}(x_i)$$ are vectors, so multiplying the transpose of $$\tilde{y}_i$$ by the log of the softmax probability vector results in the dot product between the two. For labeled observations, $$\tilde{y}_i$$ is the true vector (e.g. $$\tilde{y}_i=(0,0,1)$$), so this just outputs the log of the predicted probability of being in the true class. For pseudo-labeled observations, $$\tilde{y}_i$$ is also a vector of softmax probabilities, which means the loss contribution is the dot product of the previous softmax predictions and the log of the new softmax predictions. The regularization terms $$R_H$$ and $$R_A$$ are also calculated (recall they are mini-batch averages), so that the gradient of $$\ell$$ can be calculated to obtain the stepping directions for $$\theta$$.
 
 The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled observations are stored for each mini-batch in an epoch. At the end of the epoch, the soft pseudo-labels are updated using $$\tilde{y}_i=h_{\theta}(x_i)$$, and these new labels are used in the next epoch (Tanaka et al, 2018). These steps repeat until the specified number of epochs has been reached. An overview of the algorithm is visualized in Figure 4, and Figure 5 shows the general update procedure for the CNN parameters $$\theta$$ and the soft pseudo-labels $$\tilde{y}_i$$. 
 
@@ -97,12 +97,11 @@ The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled o
 
 When network predictions are incorrect, these predictions are reinforced since the network predictions are used as labels for the unlabeled samples. Overfitting to these incorrect predictions is called confirmation bias. 
 
-To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (generating new data by warping existing data(8)) and label smoothing (a technique that increases label noise(9)). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($$y_p$$ and $$y_q$$) (Figure 6)
+To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (generating new data by warping existing data (8)) and label smoothing (a technique that increases label noise (9)). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($$y_p$$ and $$y_q$$) (Figure 6)
 
-$$x=\delta x_p + (1-\delta)x_q$$,
-$$y=\delta y_p + (1-\delta)y_q$$
+$$x=\delta x_p + (1-\delta)x_q, \qquad y=\delta y_p + (1-\delta)y_q$$
 
-Where $$\delta$$ is randomly sampled from a beta distribution Be($$\alpha,\beta$$) with $$\alpha=\beta$$
+Where $$\delta$$ is randomly sampled from a beta distribution Beta($$\alpha,\beta$$) with $$\alpha=\beta$$
 
 | ![Figure 6](mixup.png) | 
 |:--:| 
@@ -116,9 +115,9 @@ $$
 
 Combining $$y_p$$ and $$y_q$$ reduces prediction confidence, thus reducing overfitting to the predictions.
 
-Including mixup in training generates softmax output $$h_{\theta}(x)$$ using the mixed input x, so a second forward pass using the original images is required to compute predictions that aren’t mixed. 
+Including mixup in training generates softmax output $$h_{\theta}(x)$$ using the mixed input $$x$$, so a second forward pass using the original images is required to compute predictions that aren’t mixed. 
 
-When there are few labeled samples, mixup may not be able to deal with confirmation bias effectively by itself. To improve the quality of the pseudo labels, the authors mention that previous studies have oversampled the labeled samples per mini batch to reduce confirmation bias and reinforce correct labels. 
+When there are few labeled samples, mixup may not be able to deal with confirmation bias effectively by itself. To improve the quality of the pseudo-labels, the authors mention that previous studies have oversampled the labeled samples per mini batch to reduce confirmation bias and reinforce correct labels. 
 
 This loss can be split into two sample terms, one based on the labeled samples and one based on the unlabeled samples. 
 
@@ -130,7 +129,7 @@ where $$N_l$$ and $$N_u$$ are the number of labeled and unlabelled samples, and
 $$
 \bar{\ell}_l = \frac{1}{N_l}\Sigma_{i=1}^{N_l}\ell_l^{(i)}
 $$
- is the average loss for the labeled samples, and $$l_u$$ is the average loss for the unlabeled samples (using the same form as above). 
+ is the average loss for the labeled samples, and $$\bar{\ell}_u$$ is the average loss for the unlabeled samples (using the same form as above). 
 
 When $$N_l$$ << $$N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
 
@@ -138,7 +137,7 @@ The authors tested the effect of mixup using the “two moons” data and showed
 
 | ![Figure 7](Twomoon.png) | 
 |:--:| 
-| **Figure 7: Two Moons Data (1)** |
+| **Figure 7: L to R Two Moons Data no mixup, mixup, mixup with oversampling (1)** |
 
 ### Their Results and Conclusions
 To compare the effectiveness of their pseudo labeling algorithm to previous methods, the authors evaluated their method on four datasets commonly used for testing image classification: CIFAR10, CIFAR100(10), SVHN(11), and Mini-ImageNet(12). 
