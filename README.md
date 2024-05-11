@@ -151,7 +151,10 @@ Next, they compared their methods to state of the art approaches for SSL, which 
 
 Overall, a semi-supervised learning approach using soft pseudo labels with mixup, a minimum number of labeled samples per mini batch, dropout, and data augmentation, outperforms other approaches in four datasets and across different network architectures. The authors conclude that it is a simple and accurate alternative to consistency regularization.
 
-\newpage
+
+
+
+
 
 ### References
 
