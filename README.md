@@ -132,7 +132,7 @@ $$
 $$
  is the average loss for the labeled samples, and $$l_u$$ is the average loss for the unlabeled samples (using the same form as above). 
 
-When $$N_l$$ << $N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
+When $$N_l$$ << $$N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
 
 The authors tested the effect of mixup using the “two moons” data and showed that mixup, combined with oversampling, effectively reduced confirmation bias, and gave a smooth rather than linear boundary (Figure 7). 
 
@@ -150,9 +150,6 @@ For CIFAR 10/100, networks without mixup were overfitting on the predictions and
 Next, they compared their methods to state of the art approaches for SSL, which either used consistency regularization approaches or pseudo labeling approaches. The authors’ method outperforms consistency regularization methods and purely pseudo labeling methods, and it continues to be more effective especially with a decreased number of labels. 
 
 Overall, a semi-supervised learning approach using soft pseudo labels with mixup, a minimum number of labeled samples per mini batch, dropout, and data augmentation, outperforms other approaches in four datasets and across different network architectures. The authors conclude that it is a simple and accurate alternative to consistency regularization.
-
-
-
 
 
 
