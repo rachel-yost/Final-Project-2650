@@ -9,7 +9,7 @@ Semi-supervised learning uses a small portion of labeled data and a large amount
 
 Convolutional neural networks are the prevailing approach in computer vision, and require large amounts of labeled data, which can be tricky to acquire. Semi-supervised learning is often used for image classification, which is our topic of interest.
 
-Approaches in image classification focus on the areas of consistency regularization and pseudo-labeling. Consistency regularization encourages the model to produce consistent predictions under different perturbations of the input, to improve the generalizability of the model (talk more about consistency regularization maybe if we want to add more text idk). Pseudo-labeling generates labels for the unlabeled data that are used in the learning process, acting as true labels to use within the loss function. Early methods of pseudo-labeling use the network predictions as labels, but only use the pseudo labels during a warm-up stage (D. Lee, 2013). A later approach uses the network predictions using hard labels as pseudo-labels, and adds an uncertainty weight for each sample loss based on distance from its k-nearest neighbors, as well as a loss term to encourage compact and well-separated clusters, and a term to encourage consistency between perturbed samples (W. Shi et al., 2018). Recent work introduces graph-based label propagation, in which the model is trained on the labeled and pseudo-labeled data, and a nearest-neighbor graph based on the network is created. The pseudo-labels are propagated from the labeled data points to the unlabeled points and uncertainty scores are added based on the softmax predictions for each sample and based on class imbalance (A. Iscen et al., 2019).
+Approaches in image classification focus on the areas of consistency regularization and pseudo-labeling. Consistency regularization encourages the model to produce consistent predictions under different perturbations of the input, to improve the generalizability of the model. Pseudo-labeling generates labels for the unlabeled data that are used in the learning process, acting as true labels to use within the loss function. Early methods of pseudo-labeling use the network predictions as labels, but only use the pseudo labels during a warm-up stage (2). A later approach (3) uses the network predictions using hard labels as pseudo-labels, and adds an uncertainty weight for each sample loss based on distance from its k-nearest neighbors, as well as a loss term to encourage compact and well-separated clusters, and a term to encourage consistency between perturbed samples. Recent work (4) introduces graph-based label propagation, in which the model is trained on the labeled and pseudo-labeled data, and a nearest-neighbor graph based on the network is created. The pseudo-labels are propagated from the labeled data points to the unlabeled points and uncertainty scores are added based on the softmax predictions for each sample and based on class imbalance.
 
 ### The Paper
 
@@ -35,9 +35,9 @@ The difference between a CNN and a standard feed-forward neural network we have 
 |:--:|
 |**Figure 2 (ISL Figure 10.6): Hierarchical Structure of CNNs** |
 
-This process works by using two types of hidden layers: convolution layers and pooling layers. Convolution layers contain a series of convolution filters, which determine whether a small feature is present in the image by going through the entire image in sections the same size as the filter. This is achieved by matrix multiplying the the data in each section by the filter values to create a new matrix of values called the convolved image. If the convolved image has large values, this means that the image section contains features similar to the feature the filter is trying to identify. The convolved images are combined to create a feature map for each filter, which is then passed on to the next layer. The values in each filter, which represent the feature it is identifying,  are comparable to the weight matrices we have seen in feed-forward networks and are the parameters $$\theta$$ being optimized when training the CNN. The number of filters in a layer is analogous to the width of a layer in the networks we have previously seen (G. James et al., 2021).
+This process works by using two types of hidden layers: convolution layers and pooling layers. Convolution layers contain a series of convolution filters, which determine whether a small feature is present in the image by going through the entire image in sections the same size as the filter. This is achieved by matrix multiplying the the data in each section by the filter values to create a new matrix of values called the convolved image. If the convolved image has large values, this means that the image section contains features similar to the feature the filter is trying to identify. The convolved images are combined to create a feature map for each filter, which is then passed on to the next layer. The values in each filter, which represent the feature it is identifying,  are comparable to the weight matrices we have seen in feed-forward networks and are the parameters $$\theta$$ being optimized when training the CNN. The number of filters in a layer is analogous to the width of a layer in the networks we have previously seen (5).
 
-Pooling layers, the second type of layer used in CNNs, are essentially a form of dimension reduction that reduce a large image into a smaller summary image. One common method is max pooling, which looks at each section in an image and stores only the maximum value found in that section. These layers always come after a convolution layer, although there may be multiple convolution layers before a pooling layer, and therefore reduce the size of the feature maps created by each filter. The combination of convolution and pooling layers is repeated until the feature maps have low dimension, at which point they are flattened into individual units and fed to fully-connected layers before classification with the softmax output layer. An example of a CNN architecture is shown in Figure 3 from ISL page 416 (G. James et al., 2021). 
+Pooling layers, the second type of layer used in CNNs, are essentially a form of dimension reduction that reduce a large image into a smaller summary image. One common method is max pooling, which looks at each section in an image and stores only the maximum value found in that section. These layers always come after a convolution layer, although there may be multiple convolution layers before a pooling layer, and therefore reduce the size of the feature maps created by each filter. The combination of convolution and pooling layers is repeated until the feature maps have low dimension, at which point they are flattened into individual units and fed to fully-connected layers before classification with the softmax output layer. An example of a CNN architecture is shown in Figure 3 from ISL page 416 (5). 
 
 | ![Figure 3](Figure 3.png) | 
 |:--:| 
@@ -62,7 +62,7 @@ The second regularization is needed when using soft pseudo-labels instead of har
 
 $$R_H=-\frac{1}{N}\sum^N_{i=1}\sum^C_{c=1}h^c_{\theta}(x_i)\log(h^c_{\theta}(x_i))$$
 
-where $$h_{\theta}^c(x_i)$$ is the $$c$$th softmax probability of from $$h_{\theta}(x_i)$$. Entropy represents the amount of uncertainty in predicting the class of the outcome and is given by $$-\sum^C_{c=1}h^c_{\theta}(x_i)\log(h^c_{\theta}(x_i))$$ portion of the regularization (Vedral, 2002). When the predicted probabilities are very similar, indicating high uncertainty in prediction, the entropy will be high, and when there is less uncertainty, the entropy will be lower. For example, predicted probabilities $$h_{\theta}(x_i)=(.3,.3,.4)$$ have entropy equal to 1.09, whereas the predicted probabilities $$h_{\theta}(x_i)=(.9,.05,.05)$$ have entropy 0.394. Therefore, this regularization term will apply a larger penalty to the loss function when entropy is high, which encourages the probability of one class to be larger than the others. Like with the first regularization term, the average entropy of all observations is estimated by averaging over the observations in each mini-batch. 
+where $$h_{\theta}^c(x_i)$$ is the $$c$$th softmax probability of from $$h_{\theta}(x_i)$$. Entropy represents the amount of uncertainty in predicting the class of the outcome and is given by $$-\sum^C_{c=1}h^c_{\theta}(x_i)\log(h^c_{\theta}(x_i))$$ portion of the regularization (6). When the predicted probabilities are very similar, indicating high uncertainty in prediction, the entropy will be high, and when there is less uncertainty, the entropy will be lower. For example, predicted probabilities $$h_{\theta}(x_i)=(.3,.3,.4)$$ have entropy equal to 1.09, whereas the predicted probabilities $$h_{\theta}(x_i)=(.9,.05,.05)$$ have entropy 0.394. Therefore, this regularization term will apply a larger penalty to the loss function when entropy is high, which encourages the probability of one class to be larger than the others. Like with the first regularization term, the average entropy of all observations is estimated by averaging over the observations in each mini-batch. 
 
 It may seem like these regularizations are contradictory, but their weights are adjustable so they're effects don't just cancel out. When we combine the cross-entropy loss with the regularizations, we get the penalized loss function 
 
@@ -97,11 +97,16 @@ The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled o
 
 When network predictions are incorrect, these predictions are reinforced since the network predictions are used as labels for the unlabeled samples. Overfitting to these incorrect predictions is called confirmation bias. 
 
-To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (artificially generating new data from existing data) and label smoothing (a technique that introduces noise to the labels). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($$y_p$$ and $$y_q$$)
+To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (generating new data by warping existing data(8)) and label smoothing (a technique that increases label noise(9)). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($y_p$ and $y_q$) (F
 
-$$x=\delta x_p + (1-\delta)x_q, \qquad y=\delta y_p + (1-\delta)y_q$$
+$$x=\delta x_p + (1-\delta)x_q$$,
+$$y=\delta y_p + (1-\delta)y_q$$
 
 Where $$\delta$$ is randomly sampled from a beta distribution Be($$\alpha,\beta$$) with $$\alpha=\beta$$
+
+| ![Figure 6](mixup.png) | 
+|:--:| 
+| **Figure 6: Implementing Mixup** |
 
 The combined version of y can be included in the loss function, producing an updated loss equation:
 
@@ -115,33 +120,44 @@ Including mixup in training generates softmax output $$h_{\theta}(x)$$ using the
 
 When there are few labeled samples, mixup may not be able to deal with confirmation bias effectively by itself. To improve the quality of the pseudo labels, the authors mention that previous studies have oversampled the labeled samples per each mini batch to reduce confirmation bias and reinforce correct labels. 
 
-This oversampling technique can be understood by splitting the total loss into a term depending on the labeled samples and a term depending on the unlabeled samples. 
+This loss can be split into two sample terms, one based on the labeled samples and one based on the unlabeled samples. 
 
 $$
 \ell^* = N_l\bar{\ell_l} + N_u\bar{\ell_u}
 $$
 
-where $$N_l$$ and $$N_u$$ are the number of labeled and unlabelled samples, and the 
+where $N_l$ and $N_u$ are the number of labeled and unlabelled samples, and 
 $$
 \bar{\ell}_l = \frac{1}{N_l}\Sigma_{i=1}^{N_l}\ell_l^{(i)}
 $$
- is the average loss for the labeled samples, and $$l_u$$ is the average loss for the unlabeled samples. 
+ is the average loss for the labeled samples, and $$l_u$$ is the average loss for the unlabeled samples (using the same form as above). 
 
-When $$N_l$$ << $$N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
+When $$N_l$$ << $N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
 
+The authors tested the effect of mixup using the “two moons” data and showed that mixup, combined with oversampling, effectively reduced confirmation bias, and gave a smooth rather than linear boundary. 
 
+### Conclusions
+To compare the effectiveness of their pseudo labeling algorithm to previous methods, the authors evaluated their method on four datasets commonly used for testing image classification: CIFAR10, CIFAR100(10), SVHN(11), and Mini-ImageNet(12). 
 
+The authors normalized the images to the dataset mean and standard deviation, which aids convergence, and then augmented the data by implementing random horizontal flips, pixel translations, and color jitter. For training, they used stochastic gradient descent (SGD), with momentum = 0.9, weight decay= 10^-4, and batch size of 100. They begin training with a high learning rate of 0.1 for CIFAR and SVHN and .2 for MiniImageNet, and then it is divided by 10 twice throughout the training process. CIFAR and MiniImageNet are trained for 400 epochs with a 10 epoch warmup, and SVHN is trained for 150 epochs with a 150 epoch warmup. The regularization weights we mentioned previously: $$\lambda_A$$ and $$\lambda_H$$ are set to 0.8 and 0.4, and they include dropout and weight normalization in their networks. 
 
+For CIFAR 10/100, networks without mixup were overfitting on the predictions and had a high training accuracy. Error was reduced when mixup was included, and performed better when more labels were included. In past studies, network architecture played a role in the success of different approaches, so the authors test across various architectures using pseudo labeling with mixup and at least 16 labeled samples per mini batch. They found that their methods work well across all of the tested architectures except one. 
+
+Next, they compared their methods to state of the art approaches for SSL, which either used consistency regularization approaches or pseudo labeling approaches. The authors’ method outperforms consistency regularization methods and purely pseudo labeling methods, and it continues to be more effective especially with a decreased number of labels. 
+
+Overall, a semi-supervised learning approach using soft pseudo labels with mixup, a minimum number of labeled samples per mini batch, dropout, and data augmentation, outperforms other approaches in four datasets and across different network architectures. The authors conclude that it is a simple and accurate alternative to consistency regularization.
 
 ### References
 
-1.	Arazo, E., Ortego, D., Albert, P., O’Connor, N. E. & McGuinness, K. Pseudo-Labeling and Confirmation Bias in Deep Semi-Supervised Learning. in 2020 International Joint Conference on Neural Networks (IJCNN) 1–8 (2020). doi:10.1109/IJCNN48605.2020.9207304.
-2. Iscen, A., Tolias, G., Avrithis, Y. & Chum, O. Label Propagation for Deep Semi-Supervised Learning. in 5070–5079 (2019).
-3. James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). An Introduction to Statistical Learning with Applications in R (2nd ed.). Springer.
-4. Krizhevsky, A. Learning Multiple Layers of Features from Tiny Images.
-5.	Lee, D.-H. Pseudo-Label : The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks. ICML 2013 Workshop Chall. Represent. Learn. WREPL (2013).
-6.	Netzer, Y. et al. Reading Digits in Natural Images with Unsupervised Feature Learning.
-7.	Shi, W. et al. Transductive Semi-Supervised Deep Learning Using Min-Max Features. in Computer Vision – ECCV 2018 (eds. Ferrari, V., Hebert, M., Sminchisescu, C. & Weiss, Y.) vol. 11209 311–327 (Springer International Publishing, Cham, 2018).
-8.	Tanaka, D., Ikami, D., Yamasaki, T. & Aizawa, K. Joint Optimization Framework for Learning with Noisy Labels. Preprint at http://arxiv.org/abs/1803.11364 (2018).
-9.	Vedral, V. The role of relative entropy in quantum information theory. Rev. Mod. Phys. 74, 197–234 (2002). 
-10.	Vinyals, O., Blundell, C., Lillicrap, T., Kavukcuoglu, K. & Wierstra, D. Matching Networks for One Shot Learning. Preprint at http://arxiv.org/abs/1606.04080 (2017).
+1.	Arazo E, Ortego D, Albert P, O’Connor NE, McGuinness K. Pseudo-Labeling and Confirmation Bias in Deep Semi-Supervised Learning. In: 2020 International Joint Conference on Neural Networks (IJCNN) [Internet]. 2020 [cited 2024 May 10]. p. 1–8. Available from: https://ieeexplore.ieee.org/abstract/document/9207304?casa_token=UIP9QUw65eQAAAAA:Cm1ronqlDtbMAWzI8-8t85b6oCP1c4EjZjO_jz_cPOb8_sjvse4HzKTzdgPqgWuNcU29QG6okDE
+2.	Lee DH. Pseudo-Label : The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks. ICML 2013 Workshop Chall Represent Learn WREPL. 2013 Jul 10;
+3.	Shi W, Gong Y, Ding C, Ma Z, Tao X, Zheng N. Transductive Semi-Supervised Deep Learning Using Min-Max Features. In: Ferrari V, Hebert M, Sminchisescu C, Weiss Y, editors. Computer Vision – ECCV 2018 [Internet]. Cham: Springer International Publishing; 2018 [cited 2024 May 9]. p. 311–27. (Lecture Notes in Computer Science; vol. 11209). Available from: https://link.springer.com/10.1007/978-3-030-01228-1_19
+4.	Iscen A, Tolias G, Avrithis Y, Chum O. Label Propagation for Deep Semi-Supervised Learning. In 2019 [cited 2024 May 9]. p. 5070–9. Available from: https://openaccess.thecvf.com/content_CVPR_2019/html/Iscen_Label_Propagation_for_Deep_Semi-Supervised_Learning_CVPR_2019_paper.html
+5.	Gareth J, Witten D, Hastie T, Tibshirani R. An Introduction to Statistical Learning with Applications in R (2nd ed.). Second. 2023.
+6.	Vedral V. The role of relative entropy in quantum information theory. Rev Mod Phys. 2002 Mar 8;74(1):197–234.
+7.	Tanaka D, Ikami D, Yamasaki T, Aizawa K. Joint Optimization Framework for Learning with Noisy Labels [Internet]. arXiv; 2018 [cited 2024 May 9]. Available from: http://arxiv.org/abs/1803.11364
+8.	Mumuni A, Mumuni F. Data augmentation: A comprehensive survey of modern approaches. Array. 2022 Dec 1;16:100258.
+9.	Szegedy C, Vanhoucke V, Ioffe S, Shlens J, Wojna Z. Rethinking the Inception Architecture for Computer Vision. In: 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) [Internet]. 2016 [cited 2024 May 10]. p. 2818–26. Available from: https://ieeexplore.ieee.org/document/7780677
+10.	Krizhevsky A. Learning Multiple Layers of Features from Tiny Images.
+11.	Netzer Y, Wang T, Coates A, Bissacco A, Wu B, Ng AY. Reading Digits in Natural Images with Unsupervised Feature Learning.
+12.	Vinyals O, Blundell C, Lillicrap T, Kavukcuoglu K, Wierstra D. Matching Networks for One Shot Learning [Internet]. arXiv; 2017 [cited 2024 May 10]. Available from: http://arxiv.org/abs/1606.04080
