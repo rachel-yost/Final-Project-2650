@@ -138,7 +138,7 @@ The authors tested the effect of mixup using the “two moons” data and showed
 
 | ![Figure 7](Twomoon.png) | 
 |:--:| 
-| **Figure 7: Two Moons Data (1) ** |
+| **Figure 7: Two Moons Data (1)** |
 
 ### Their Results and Conclusions
 To compare the effectiveness of their pseudo labeling algorithm to previous methods, the authors evaluated their method on four datasets commonly used for testing image classification: CIFAR10, CIFAR100(10), SVHN(11), and Mini-ImageNet(12). 
