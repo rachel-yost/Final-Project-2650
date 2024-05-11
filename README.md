@@ -19,7 +19,7 @@ We will describe the pseudo-labeling methodology proposed in the paper "Pseudo-L
 
 For this implementation of pseudo-labeling, the authors specified data $$D$$ with $$N$$ observations split into labeled and unlabeled sets $$D_l=\{(x_i,y_i)\}^{N_l}_{i=1}$$ and $$D_u=\{x_i\}^{N_u}_{i=1}$$, respectively (Figure 1). Here, the $$y_i$$ values are one-hot encoded for $$C$$ possible classes. For example, if there are 3 possible classes and an observation is in the 3rd class, this would be represented as $$y=(0,0,1)$$. 
 
-| ![Figure 1](Figure 1.png) | 
+| ![Figure 1](Figure 1.png){: width="250" } | 
 |:--:| 
 |**Figure 1: Labeling Structure of Data** |
 
@@ -31,7 +31,7 @@ The model used by the authors is a convolutional neural network (CNN) with a sof
 
 The difference between a CNN and a standard feed-forward neural network we have seen comes in the formulation of the layers and how it attempts to classify images. CNNs work by first identifying small, local features that are then combined together to form broader features, which are then used to calculate the class probabilities. This creates a hierarchical structure in the network, which is illustrated in Figure 2, taken from ISL page 412 (5). In this figure, we can see that the network identifies areas of lines, shapes, and colors, which are then combined to identify larger features such as eyes and ears. 
 
-| ![Figure 2](Figure 2.png) | 
+| ![Figure 2](Figure 2.png){: width="300" } | 
 |:--:|
 |**Figure 2 (ISL Figure 10.6): Hierarchical Structure of CNNs** |
 
@@ -39,7 +39,7 @@ This process works by using two types of hidden layers: convolution layers and p
 
 Pooling layers, the second type of layer used in CNNs, are essentially a form of dimension reduction that reduce a large image into a smaller summary image. One common method is max pooling, which looks at each section in an image and stores only the maximum value found in that section. These layers always come after a convolution layer, although there may be multiple convolution layers before a pooling layer, and therefore reduce the size of the feature maps created by each filter. The combination of convolution and pooling layers is repeated until the feature maps have low dimension, at which point they are flattened into individual units and fed to fully-connected layers before classification with the softmax output layer. An example of a CNN architecture is shown in Figure 3 from ISL page 416 (5). 
 
-| ![Figure 3](Figure 3.png) | 
+| ![Figure 3](Figure 3.png){: width="350" } | 
 |:--:| 
 | **Figure 3 (ISL Figure 10.8): Sample CNN Architecture** |
 
@@ -76,7 +76,7 @@ As previously stated, the model used in this paper is a convolution neural netwo
 
 In order to optimize the network parameters, we first need to get initial soft pseudo-labels for the unlabeled data. To do so, the CNN is trained on the labeled data, $$D_l$$, for 10 epochs as a "warm-up". Then, the warm-up model is used to fit initial softmax predictions to the unlabeled data, $$D_u$$. The combined labeled and pseudo-labeled data are then used to further train the network. 
 
-| ![Figure 4](Figure 4.png) | 
+| ![Figure 4](Figure 4.png){: width="400" } | 
 |:--:| 
 | **Figure 4: Basic Pseudo-Labeling Algorithm** |
 
