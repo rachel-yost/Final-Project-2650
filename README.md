@@ -134,7 +134,7 @@ $$
 
 When $$N_l$$ << $$N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
 
-The authors tested the effect of mixup using the “two moons” data and showed that mixup, combined with oversampling, effectively reduced confirmation bias, and gave a smooth rather than linear boundary (Figure 7). 
+The authors tested the effect of mixup using the “two moons” data and showed that mixup, combined with oversampling, reduced confirmation bias, and gave a smooth rather than linear boundary (Figure 7). 
 
 | ![Figure 7](Twomoon.png) | 
 |:--:| 
