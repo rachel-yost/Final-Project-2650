@@ -151,6 +151,8 @@ Next, they compared their methods to state of the art approaches for SSL, which 
 
 Overall, a semi-supervised learning approach using soft pseudo labels with mixup, a minimum number of labeled samples per mini batch, dropout, and data augmentation, outperforms other approaches in four datasets and across different network architectures. The authors conclude that it is a simple and accurate alternative to consistency regularization.
 
+\newpage
+
 ### References
 
 1.	Arazo E, Ortego D, Albert P, O’Connor NE, McGuinness K. Pseudo-Labeling and Confirmation Bias in Deep Semi-Supervised Learning. In: 2020 International Joint Conference on Neural Networks (IJCNN) [Internet]. 2020 [cited 2024 May 10]. p. 1–8. Available from: https://ieeexplore.ieee.org/abstract/document/9207304?casa_token=UIP9QUw65eQAAAAA:Cm1ronqlDtbMAWzI8-8t85b6oCP1c4EjZjO_jz_cPOb8_sjvse4HzKTzdgPqgWuNcU29QG6okDE
