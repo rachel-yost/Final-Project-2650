@@ -97,7 +97,7 @@ The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled o
 
 When network predictions are incorrect, these predictions are reinforced since the network predictions are used as labels for the unlabeled samples. Overfitting to these incorrect predictions is called confirmation bias. 
 
-To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (generating new data by warping existing data(8)) and label smoothing (a technique that increases label noise(9)). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($y_p$ and $y_q$) (F
+To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (generating new data by warping existing data(8)) and label smoothing (a technique that increases label noise(9)). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($y_p$ and $y_q$) (Figure 6)
 
 $$x=\delta x_p + (1-\delta)x_q$$,
 $$y=\delta y_p + (1-\delta)y_q$$
@@ -134,7 +134,11 @@ $$
 
 When $$N_l$$ << $N_u$$, the network focuses more on fitting the unlabeled samples correctly compared to the labeled samples. To counteract this, $$N_l$$ can be weighted more heavily or the labeled samples can be oversampled. The authors choose to oversample since it means that the model gets more chances to adjust its parameters to fit the labeled samples.
 
-The authors tested the effect of mixup using the “two moons” data and showed that mixup, combined with oversampling, effectively reduced confirmation bias, and gave a smooth rather than linear boundary. 
+The authors tested the effect of mixup using the “two moons” data and showed that mixup, combined with oversampling, effectively reduced confirmation bias, and gave a smooth rather than linear boundary (Figure 7). 
+
+| ![Figure 7](Twomoon.png) | 
+|:--:| 
+| **Figure 7: Implementing Mixup** |
 
 ### Conclusions
 To compare the effectiveness of their pseudo labeling algorithm to previous methods, the authors evaluated their method on four datasets commonly used for testing image classification: CIFAR10, CIFAR100(10), SVHN(11), and Mini-ImageNet(12). 
