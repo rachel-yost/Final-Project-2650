@@ -140,7 +140,7 @@ The authors tested the effect of mixup using the “two moons” data and showed
 |:--:| 
 | **Figure 7: Two Moons Data (1) ** |
 
-### Conclusions
+### Their Results and Conclusions
 To compare the effectiveness of their pseudo labeling algorithm to previous methods, the authors evaluated their method on four datasets commonly used for testing image classification: CIFAR10, CIFAR100(10), SVHN(11), and Mini-ImageNet(12). 
 
 The authors normalized the images to the dataset mean and standard deviation, which aids convergence, and then augmented the data by implementing random horizontal flips, pixel translations, and color jitter. For training, they used stochastic gradient descent (SGD), with momentum = 0.9, weight decay= 10^-4, and batch size of 100. They begin training with a high learning rate of 0.1 for CIFAR and SVHN and .2 for MiniImageNet, and then it is divided by 10 twice throughout the training process. CIFAR and MiniImageNet are trained for 400 epochs with a 10 epoch warmup, and SVHN is trained for 150 epochs with a 150 epoch warmup. The regularization weights we mentioned previously: $$\lambda_A$$ and $$\lambda_H$$ are set to 0.8 and 0.4, and they include dropout and weight normalization in their networks. 
