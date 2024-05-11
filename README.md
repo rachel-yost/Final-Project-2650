@@ -22,7 +22,7 @@ For this implementation of pseudo-labeling, the authors specified data $$D$$ wit
 
 | ![Figure 1](Figure 1.png) | 
 |:--:| 
-|**Figure 1** |
+|**Figure 1: Labeling Structure of Data** |
 
 This method uses soft pseudo-labeling which differs from hard pseudo-labeling in that it does not store the predicted classes, but rather the predicted softmax probabilities of each class. The pseudo-labels are denoted as $$\tilde{y}$$, and $$\tilde{y}=y$$ for the labeled observations. For example, if there are 3 classes, and the model predicts an observation is in class 1 with probability 0.2, class 2 with probability 0.2, and class 3 with probability 0.6, the soft pseudo-label is $$\tilde{y}=(0.2,0.2,0.6)$$.
 
@@ -34,7 +34,7 @@ The difference between a CNN and a standard feed-forward neural network we have 
 
 | ![Figure 2](Figure 2.png) | 
 |:--:|
-|**Figure 2 (ISL Figure 10.6)** |
+|**Figure 2 (ISL Figure 10.6): Hierarchical Structure of CNNs** |
 
 This process works by using two types of hidden layers: convolution layers and pooling layers. Convolution layers contain a series of convolution filters, which determine whether a small feature is present in the image by going through the entire image in sections the same size as the filter. This is achieved by matrix multiplying the the data in each section by the filter values to create a new matrix of values called the convolved image. If the convolved image has large values, this means that the image section contains features similar to the feature the filter is trying to identify. The convolved images are combined to create a feature map for each filter, which is then passed on to the next layer. The values in each filter, which represent the feature it is identifying,  are comparable to the weight matrices we have seen in feed-forward networks and are the parameters $$\theta$$ being optimized when training the CNN. The number of filters in a layer is analogous to the width of a layer in the networks we have previously seen (G. James et al., 2021).
 
@@ -42,7 +42,7 @@ Pooling layers, the second type of layer used in CNNs, are essentially a form of
 
 | ![Figure 3](Figure 3.png) | 
 |:--:| 
-| **Figure 3** |
+| **Figure 3 (ISL Figure 10.8): Sample CNN Architecture** |
 
 As with standard feed-forward networks we saw in class, the CNN used in this paper has a feed-forward structure and uses backpropagation to calculate the gradients to optimize the $$\theta$$ parameters using mini-batch gradient descent. The CNN can also be tuned by adjusting the number, size, and type of the layers, as well as other features such as regularization and dropout terms, like we have previously seen. 
 
@@ -75,7 +75,7 @@ where the $$\lambda$$ values control the amount of regularization, which we have
 
 | ![Figure 4](Figure 4.png) | 
 |:--:| 
-| **Figure 4** |
+| **Figure 4: Basic Pseudo-Labeling Algorithm** |
 
 As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
 
@@ -91,7 +91,7 @@ The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled o
 
 | ![Figure 5](Figure 5.png) | 
 |:--:| 
-| **Figure 5** |
+| **Figure 5: Updating Parameters and Pseudo-Labels** |
 
 
 
