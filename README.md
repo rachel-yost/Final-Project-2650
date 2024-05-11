@@ -13,8 +13,7 @@ Approaches in image classification focus on the areas of consistency regularizat
 
 ### The Paper
 
-On this page, we will describe the pseudo-labeling methodology proposed in the paper "Pseudo-Labeling and Confirmation Bias in Deep Semi-Supervised Learning" by Arazo et al. published in 2020. 
-
+We will describe the pseudo-labeling methodology proposed in the paper "Pseudo-Labeling and Confirmation Bias in Deep Semi-Supervised Learning" by Arazo et al. published in 2020. 
 
 ### Set up and Notation
 
