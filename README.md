@@ -73,15 +73,15 @@ where the $$\lambda$$ values control the amount of regularization, which we have
 
 ## The Algorithm
 
+As previously stated, the model used in this paper is a convolution neural network (CNN) that trains similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
+
+In order to optimize the network parameters, we first need to get initial soft pseudo-labels for the unlabeled data. To do so, the CNN is trained on the labeled data, $$D_l$$, for 10 epochs as a "warm-up". Then, the warm-up model is used to fit initial softmax predictions to the unlabeled data, $$D_u$$. The combined labeled and pseudo-labeled data are then used to further train the network. 
+
 | ![Figure 4](Figure 4.png) | 
 |:--:| 
 | **Figure 4: Basic Pseudo-Labeling Algorithm** |
 
-As previously stated, the model used in this paper is a convolution neural network (CNN) that functions similarly to the algorithms we have seen in class and in homework assignments. The network parameters are initialized randomly and then optimized using mini-batch gradient descent by training on the data. 
-
-In order to optimize the network parameters, we first need to get initial soft pseudo-labels for the unlabeled data. To do so, the CNN is trained on the labeled data, $$D_l$$, for 10 epochs as a "warm-up". Then, the warm-up model is used to fit initial softmax predictions to the unlabeled data, $$D_u$$. The combined labeled and pseudo-labeled data are then used to further train the network. In each epoch, the parameters $$\theta$$ are updated using gradient descent on the loss function $$\ell$$ for each mini-batch, and the softmax predictions for each of the unlabeled observations are stored. 
-
-Recall the basic loss function is the categorical cross-entropy loss
+In each epoch, the parameters $$\theta$$ are updated using gradient descent on the loss function $$\ell$$ for each mini-batch, and the softmax predictions for each of the unlabeled observations are stored. Recall the basic loss function is the categorical cross-entropy loss
 
 $$\ell^*=-\sum^N_{i=1}\tilde{y_i}^T\log(h_{\theta}(x_i))$$
 
@@ -94,8 +94,7 @@ The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled o
 | **Figure 5: Updating Parameters and Pseudo-Labels** |
 
 
-
-### Confirmation bias
+### Confirmation Bias
 
 When network predictions are incorrect, these predictions are reinforced since the network predictions are used as labels for the unlabeled samples. Overfitting to these incorrect predictions is called confirmation bias. 
 
