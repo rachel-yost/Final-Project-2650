@@ -136,13 +136,12 @@ When $$N_l$$ << $$N_u$$, the network focuses more on fitting the unlabeled sampl
 ### References
 
 1.	Arazo, E., Ortego, D., Albert, P., O’Connor, N. E. & McGuinness, K. Pseudo-Labeling and Confirmation Bias in Deep Semi-Supervised Learning. in 2020 International Joint Conference on Neural Networks (IJCNN) 1–8 (2020). doi:10.1109/IJCNN48605.2020.9207304.
-2.	Lee, D.-H. Pseudo-Label : The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks. ICML 2013 Workshop Chall. Represent. Learn. WREPL (2013).
-3.	Shi, W. et al. Transductive Semi-Supervised Deep Learning Using Min-Max Features. in Computer Vision – ECCV 2018 (eds. Ferrari, V., Hebert, M., Sminchisescu, C. & Weiss, Y.) vol. 11209 311–327 (Springer International Publishing, Cham, 2018).
-4.	Iscen, A., Tolias, G., Avrithis, Y. & Chum, O. Label Propagation for Deep Semi-Supervised Learning. in 5070–5079 (2019).
-5.	Vedral, V. The role of relative entropy in quantum information theory. Rev. Mod. Phys. 74, 197–234 (2002).
-6.	Tanaka, D., Ikami, D., Yamasaki, T. & Aizawa, K. Joint Optimization Framework for Learning with Noisy Labels. Preprint at http://arxiv.org/abs/1803.11364 (2018).
-7.	Krizhevsky, A. Learning Multiple Layers of Features from Tiny Images.
-8.	Netzer, Y. et al. Reading Digits in Natural Images with Unsupervised Feature Learning.
-9.	Vinyals, O., Blundell, C., Lillicrap, T., Kavukcuoglu, K. & Wierstra, D. Matching Networks for One Shot Learning. Preprint at http://arxiv.org/abs/1606.04080 (2017).
-10. James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). An Introduction to Statistical Learning with Applications in R (2nd ed.). Springer.
-
+2. Iscen, A., Tolias, G., Avrithis, Y. & Chum, O. Label Propagation for Deep Semi-Supervised Learning. in 5070–5079 (2019).
+3. James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). An Introduction to Statistical Learning with Applications in R (2nd ed.). Springer.
+4. Krizhevsky, A. Learning Multiple Layers of Features from Tiny Images.
+5.	Lee, D.-H. Pseudo-Label : The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks. ICML 2013 Workshop Chall. Represent. Learn. WREPL (2013).
+6.	Netzer, Y. et al. Reading Digits in Natural Images with Unsupervised Feature Learning.
+7.	Shi, W. et al. Transductive Semi-Supervised Deep Learning Using Min-Max Features. in Computer Vision – ECCV 2018 (eds. Ferrari, V., Hebert, M., Sminchisescu, C. & Weiss, Y.) vol. 11209 311–327 (Springer International Publishing, Cham, 2018).
+8.	Tanaka, D., Ikami, D., Yamasaki, T. & Aizawa, K. Joint Optimization Framework for Learning with Noisy Labels. Preprint at http://arxiv.org/abs/1803.11364 (2018).
+9.	Vedral, V. The role of relative entropy in quantum information theory. Rev. Mod. Phys. 74, 197–234 (2002). 
+10.	Vinyals, O., Blundell, C., Lillicrap, T., Kavukcuoglu, K. & Wierstra, D. Matching Networks for One Shot Learning. Preprint at http://arxiv.org/abs/1606.04080 (2017).
