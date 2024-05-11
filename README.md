@@ -118,7 +118,7 @@ Combining $$y_p$$ and $$y_q$$ reduces prediction confidence, thus reducing overf
 
 Including mixup in training generates softmax output $$h_{\theta}(x)$$ using the mixed input x, so a second forward pass using the original images is required to compute predictions that aren’t mixed. 
 
-When there are few labeled samples, mixup may not be able to deal with confirmation bias effectively by itself. To improve the quality of the pseudo labels, the authors mention that previous studies have oversampled the labeled samples per each mini batch to reduce confirmation bias and reinforce correct labels. 
+When there are few labeled samples, mixup may not be able to deal with confirmation bias effectively by itself. To improve the quality of the pseudo labels, the authors mention that previous studies have oversampled the labeled samples per mini batch to reduce confirmation bias and reinforce correct labels. 
 
 This loss can be split into two sample terms, one based on the labeled samples and one based on the unlabeled samples. 
 
@@ -145,9 +145,9 @@ To compare the effectiveness of their pseudo labeling algorithm to previous meth
 
 The authors normalized the images to the dataset mean and standard deviation, which aids convergence, and then augmented the data by implementing random horizontal flips, pixel translations, and color jitter. For training, they used stochastic gradient descent (SGD), with momentum = 0.9, weight decay= 10^-4, and batch size of 100. They begin training with a high learning rate of 0.1 for CIFAR and SVHN and .2 for MiniImageNet, and then it is divided by 10 twice throughout the training process. CIFAR and MiniImageNet are trained for 400 epochs with a 10 epoch warmup, and SVHN is trained for 150 epochs with a 150 epoch warmup. The regularization weights we mentioned previously: $$\lambda_A$$ and $$\lambda_H$$ are set to 0.8 and 0.4, and they include dropout and weight normalization in their networks. 
 
-For CIFAR 10/100, networks without mixup were overfitting on the predictions and had a high training accuracy. Error was reduced when mixup was included, and performed better when more labels were included. In past studies, network architecture played a role in the success of different approaches, so the authors test across various architectures using pseudo labeling with mixup and at least 16 labeled samples per mini batch. They found that their methods work well across all of the tested architectures except one. 
+For CIFAR 10/100, networks without mixup were overfitting on the predictions and had a high training accuracy. Error was reduced when mixup was included, and performed better when more labels were included. In past studies, network architecture played a role in the success of different approaches, so the authors tested across various architectures using pseudo labeling with mixup and at least 16 labeled samples per mini batch. They found that their methods work well across all of the tested architectures except one. 
 
-Next, they compared their methods to state of the art approaches for SSL, which either used consistency regularization approaches or pseudo labeling approaches. The authors’ method outperforms consistency regularization methods and purely pseudo labeling methods, and it continues to be more effective especially with a decreased number of labels. 
+Next, they compared their methods to state of the art approaches for SSL, which either used consistency regularization approaches or pseudo labeling approaches. The authors’ method outperforms consistency regularization methods and purely pseudo labeling methods, and it continues to be more effective even with a decreased number of labels. 
 
 Overall, a semi-supervised learning approach using soft pseudo labels with mixup, a minimum number of labeled samples per mini batch, dropout, and data augmentation, outperforms other approaches in four datasets and across different network architectures. The authors conclude that it is a simple and accurate alternative to consistency regularization.
 
