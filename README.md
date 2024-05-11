@@ -97,7 +97,7 @@ The new softmax predictions $$h_{\theta}(x_i)$$ for each of the pseudo-labeled o
 
 When network predictions are incorrect, these predictions are reinforced since the network predictions are used as labels for the unlabeled samples. Overfitting to these incorrect predictions is called confirmation bias. 
 
-To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (generating new data by warping existing data(8)) and label smoothing (a technique that increases label noise(9)). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($y_p$ and $y_q$) (Figure 6)
+To deal with this confirmation bias, the authors use a method known as mixup data augmentation, which uses data augmentation (generating new data by warping existing data(8)) and label smoothing (a technique that increases label noise(9)). The mixup method trains the model on sample pairs ($$x_p$$ and $$x_q$$) and corresponding output labels ($$y_p$$ and $$y_q$$) (Figure 6)
 
 $$x=\delta x_p + (1-\delta)x_q$$,
 $$y=\delta y_p + (1-\delta)y_q$$
@@ -126,7 +126,7 @@ $$
 \ell^* = N_l\bar{\ell_l} + N_u\bar{\ell_u}
 $$
 
-where $N_l$ and $N_u$ are the number of labeled and unlabelled samples, and 
+where $$N_l$$ and $$N_u$$ are the number of labeled and unlabelled samples, and 
 $$
 \bar{\ell}_l = \frac{1}{N_l}\Sigma_{i=1}^{N_l}\ell_l^{(i)}
 $$
